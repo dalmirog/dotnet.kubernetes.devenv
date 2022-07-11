@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: devenv
+  name: devenv
+  namespace: default
+spec:
+  allocateLoadBalancerNodePorts: true
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ports:
+  - name: seq-web
+    port: 8010
+    protocol: TCP
+    targetPort: 80
+  - name: seq-ingest
+    port: 5341
+    protocol: TCP
+    targetPort: 5341
+  selector:
+    k8s-app: devenv
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+    - hostname: localhost

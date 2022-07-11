@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: devenv
+  name: devenv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: devenv
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        k8s-app: devenv
+    spec:
+      containers:
+      - image: datalust/seq
+        name: seq
+        env:
+          - name: "ACCEPT_EULA"
+            value: "Y"
+        ports:
+          - containerPort: 80
+          - containerPort: 5341
+          
